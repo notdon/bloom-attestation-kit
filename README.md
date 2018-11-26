@@ -21,3 +21,8 @@ Most of the installation of the Attestation Kit consists of setting environment 
 | ----------- | ----------- | -----------| ----------- |
 | API_KEY_SHA256 | all      | yes         | SHA256 hash of API key required to authenticate requests. When generating a key, make sure to use a long (>20 characters) random string.|
 | NEWRELIC_KEY | all | no | Key used to send events and debugging information to NewRelic.|
+| SENTRY_DSN | all | no | URL used to send events and debugging information to Sentry.|
+| NODE_ENV | all | yes | Should almost always be set to "production".|
+| WEB3_PROVIDER | all | yes | A URL, either HTTPS or a local websocket/RPC connection, for an Ethereum RPC provider. Most people will probably want to set up an account with Infura - more advanced users may prefer to set up a secured Geth node for this purpose.|
+| RINKEBY_WEB3_PROVIDER| all | yes | Same as above, except for the Rinkeby Ethereum test network instead of the main Ethereum network.|
+| WHISPER_PROVIDER | all | yes | RPC for a **private** geth node, i.e., not accessible by anyone who shouldn't have access to your secured information. Typically, you'll want to simply set this to ```ws://attestation-kit_gethworker_1:8546```, the default address and port for the geth node contained within the Attestation Kit Compose environment. |
