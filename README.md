@@ -35,3 +35,16 @@ Most of the installation of the Attestation Kit consists of setting environment 
 | WEBHOOK_KEY | all | yes | Shared secret key (string) for authenticating your copy of the Attestation Kit to your application. Key will be provided to your application as a header ```api_token```, which should authenticate it against a securely hashed (or hashed and salted) copy stored in a place accessible to your application.|
 | APPROVED_ATTESTERS | Attester | no | JSON object mapping attestation types (or string ```"all"```) to array of Ethereum addresses of attesters. Example: ```{"all": ["0x19859151..."], "email": ["0x54321..."]}```. A universal whitelist can also be applied by assigning any value to the property ```"any"```: ```{"any":"x"}```.| 
 | APPROVED_REQUESTERS | Attester | no | JSON object mapping attestation types (or string ```"all"```) to array of Ethereum addresses of requesters. Example: ```{"all": ["0x19859151..."], "email": ["0x54321..."]}```. A universal whitelist can also be applied by assigning any value to the property ```"any"```: ```{"any":"x"}```.|
+
+# Attester API
+## Attestation Kit attester API endpoints
+
+### GET /api/attestations
+Lists all attester attestations (where "role" is equal to "attester"). Optional scoping via "where" parameter.
+
+### Parameters
+| Name | Type | Required |Description |
+| ----------- | ----------- | -----------| ----------- |
+| where | object | no | 	An object describing parameters to match for attestations. Example values: ```{"id": "10f7a585-6aa8-4efb-b621-a3de956c2459"}```, ```{"type":"phone"}```, ```{"requester":"0xafbe892398bfbabcebfa92185918325abc19a"}```|
+| per_page | integer | no | Number of results to show per page (default value is 100)|
+| page | integer | no | What page to display (default value is 0) |
