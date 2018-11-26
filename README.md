@@ -50,7 +50,7 @@ Lists all attester attestations (where "role" is equal to "attester"). Optional 
 | page | integer | no | What page to display (default value is 0) |
 
 ### Response
-
+```
   {  
     "success":true,
     "attestations":[  
@@ -76,3 +76,4 @@ Lists all attester attestations (where "role" is equal to "attester"). Optional 
       }
     ]
   }
+```
