@@ -26,3 +26,7 @@ Most of the installation of the Attestation Kit consists of setting environment 
 | WEB3_PROVIDER | all | yes | A URL, either HTTPS or a local websocket/RPC connection, for an Ethereum RPC provider. Most people will probably want to set up an account with Infura - more advanced users may prefer to set up a secured Geth node for this purpose.|
 | RINKEBY_WEB3_PROVIDER| all | yes | Same as above, except for the Rinkeby Ethereum test network instead of the main Ethereum network.|
 | WHISPER_PROVIDER | all | yes | RPC for a **private** geth node, i.e., not accessible by anyone who shouldn't have access to your secured information. Typically, you'll want to simply set this to ```ws://attestation-kit_gethworker_1:8546```, the default address and port for the geth node contained within the Attestation Kit Compose environment. |
+| PRIMARY_ETH_PRIVKEY | all | yes | 	An Ethereum private key. |
+| PRIMARY_ETH_ADDRESS | all | yes | The Ethereum address derived from the above private key. |
+| WHISPER_PASSWORD | all | yes | The password used for decryption of public solicitations on Whisper. By default, set this to `productionBloom`.|
+
