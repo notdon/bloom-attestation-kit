@@ -163,3 +163,102 @@ Lists all requester attestations (where "role" is equal to "requester"). Optiona
   ]
 }
 ```
+
+## POST /api/requests
+Create new request. Creates a new attestation and begins the Whisper negotiation process.
+
+#### Parameters
+
+| Name | Type | Required | Description | 
+| ----------- | ----------- | -----------| ----------- |
+| attestation_type_id | integer | Either this or ```attestation_type``` | Index of attesation type (0 to 4, in same order as below) |
+| attestation_type | string | Either this or ```attestation_type_id``` | String of attestation type ("phone", "email", "facebook", "sanction-screen", or "pep-screen")|
+| subject_eth_addres | ETH address | yes | ETH address of attestation subject |
+| reward | integer (BLT in wei units) | yes | Maximum acceptable reward for negotiation | 
+
+#### Response
+
+```
+{  
+  "success":true,
+  "attestations":[  
+    {  
+      "result":null,
+      "requestNonce":"0x",
+      "paymentNonce":"0x",
+      "attestTx":"0x",
+      "id":"fabcde90-f5e6-411f-9a61-9999c04fc70c",
+      "types":[0],
+      "type":"phone",
+      "status":"initial",
+      "attester":null,
+      "requester":{"type":"Buffer","data":[3,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,10]},
+      "subject":{"type":"Buffer","data":[3,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,10]},
+      "role":"requester",
+      "subjectSig":null,
+      "paymentSig":null,
+      "negotiationId":null,
+      "createdAt":"2018-07-17T18:10:20.518Z",
+      "updatedAt":"2018-07-17T18:10:20.518Z",
+      "data": { "data": [ { "data": "+17185559999", "type": "phone", "nonce": "abcdef12-1111-4444-5192-18295172fab2" } ], "verificationStatus": "pending" }
+    }
+  ]
+}
+```
+## POST /api/requests/send
+
+Send job details to an attester to allow them to perform the attestation.
+
+#### Parameters
+| Name | Type | Required | Description | 
+| ----------- | ----------- | -----------| ----------- |
+| job_details | string of JSON object | yes | An object containing the job details ***necessary*** to submit the attestation, complete with the subject's signature (see below).|
+
+**Example of a job_details object:**
+```
+{
+  "attestationId": "cabf8219-afb9-910f-bc12-abcdef8912349876", 
+  "subjectSig": "0x0869925...", // 65 byte signature, omitted 
+  "requestNonce": "0xfef3b4d6c...", // 32 byte nonce, omitted
+  "data": {
+    "data": [
+      {
+        "data": "+17185559999", 
+        "type": "phone", 
+        "nonce": "abcdef12-1111-4444-5192-18295172fab2"
+      }
+    ],
+    "verificationStatus": "pending"
+  }
+}
+```
+See our [Signing Logic](https://bloom.co/docs/contracts/signing-logic) page for more information on obtaining a subjectSig, and our [Attestation documentation](https://bloom.co/docs/contracts/attestations) for more information on other related data structures.
+
+#### Response
+```
+{  
+  "success":true,
+  "attestations":[  
+    {  
+      "result":null,
+      "requestNonce":"0x",
+      "paymentNonce":"0x",
+      "attestTx":"0x",
+      "id":"fabcde90-f5e6-411f-9a61-9999c04fc70c",
+      "types":[0],
+      "type":"phone",
+      "status":"initial",
+      "attester":null,
+      "requester":{"type":"Buffer","data":[3,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,10]},
+      "subject":{"type":"Buffer","data":[3,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,10]},
+      "role":"requester",
+      "subjectSig":null,
+      "paymentSig":null,
+      "negotiationId":null,
+      "createdAt":"2018-07-17T18:10:20.518Z",
+      "updatedAt":"2018-07-17T18:10:20.518Z",
+      "data": { "data": [ { "data": "+17185559999", "type": "phone", "nonce": "abcdef12-1111-4444-5192-18295172fab2" } ], "verificationStatus": "pending" }
+    }
+  ]
+}
+```
