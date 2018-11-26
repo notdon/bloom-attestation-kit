@@ -51,29 +51,39 @@ Lists all attester attestations (where "role" is equal to "attester"). Optional 
 
 ### Response
 ```
-  {  
-    "success":true,
-    "attestations":[  
-      {  
-        "result":null,
-        "requestNonce":"0xbce098adbfeba8c0baefb80cab8c0ffbfcabfcabfcabfcabfcabfcabfcabfcaa",
-        "paymentNonce":"0xfabcb9aefb32509fbaced19835dbf837d8fea0fb10afbefab9cbea081bf8af9c",
-        "attestTx":"0x",
-        "id":"fabcde90-f5e6-411f-9a61-9999c04fc70c",
-        "types":[0],
-        "type":"phone",
-        "status":"initial",
-        "attester":{"type":"Buffer","data":[3,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,10]},
-        "requester":{"type":"Buffer","data":[3,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,10]},
-        "subject":{"type":"Buffer","data":[3,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,10]},
-        "role":"attester",
-        "subjectSig":{"type":"Buffer","data":[99,2,128,5,136,5,59,1,5,183,137,1,2,5,119,100,100,100,100,100,39,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,25,25,25,250,250,23,250,250,7,250,30,11,55,11,22,33,44,25,15,62,42,21,167,66,34,28]},
-        "paymentSig":{"type":"Buffer","data":[104,5,128,5,136,5,59,1,5,183,137,1,2,5,119,100,100,100,100,100,39,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,25,25,25,250,250,23,250,250,7,250,30,11,55,11,22,33,44,25,15,62,42,21,167,66,34,28]},
-        "negotiationId":"fabc9190-f5e6-411f-9a61-1b3cc0dddddd",
-        "createdAt":"2018-07-17T18:10:20.518Z",
-        "updatedAt":"2018-07-17T18:10:20.518Z",
-        "data": { "data": [ { "data": "+17185559999", "type": "phone", "nonce": "abcdef12-1111-4444-5192-18295172fab2" } ], "verificationStatus": "pending" }
-      }
-    ]
-  }
+{  
+  "success":true,
+  "attestations":[  
+    {  
+      "result":null,
+      "requestNonce":"0xbce098adbfeba8c0baefb80cab8c0ffbfcabfcabfcabfcabfcabfcabfcabfcaa",
+      "paymentNonce":"0xfabcb9aefb32509fbaced19835dbf837d8fea0fb10afbefab9cbea081bf8af9c",
+      "attestTx":"0x",
+      "id":"fabcde90-f5e6-411f-9a61-9999c04fc70c",
+      "types":[0],
+      "type":"phone",
+      "status":"initial",
+      "attester":{"type":"Buffer","data":[3,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,10]},
+      "requester":{"type":"Buffer","data":[3,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,10]},
+      "subject":{"type":"Buffer","data":[3,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,10]},
+      "role":"attester",
+      "subjectSig":{"type":"Buffer","data":[99,2,128,5,136,5,59,1,5,183,137,1,2,5,119,100,100,100,100,100,39,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,25,25,25,250,250,23,250,250,7,250,30,11,55,11,22,33,44,25,15,62,42,21,167,66,34,28]},
+      "paymentSig":{"type":"Buffer","data":[104,5,128,5,136,5,59,1,5,183,137,1,2,5,119,100,100,100,100,100,39,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,25,25,25,250,250,23,250,250,7,250,30,11,55,11,22,33,44,25,15,62,42,21,167,66,34,28]},
+      "negotiationId":"fabc9190-f5e6-411f-9a61-1b3cc0dddddd",
+      "createdAt":"2018-07-17T18:10:20.518Z",
+      "updatedAt":"2018-07-17T18:10:20.518Z",
+      "data": { "data": [ { "data": "+17185559999", "type": "phone", "nonce": "abcdef12-1111-4444-5192-18295172fab2" } ], "verificationStatus": "pending" }
+    }
+  ]
+}
 ```
+
+### POST /api/attestations
+
+Perform an attestation. Takes an existing attestation and commits it on-chain.
+
+|Name | Type| Required | Description |
+| ----------- | ----------- | -----------| ----------- |
+| attestation_id | UUID | yes | ID of attestation |
+| negotiation_id | UUID | sometimes | ID of negotiation. If omitted, the attestation's currently set ```negotiationId``` will be used.|
+| gas_price | integer (BLT in wei units) | yes | Gas price to use for committing the attestation, as measured in "wei". Gas prices can be found at [ETH Gas Station](https://www.ethgasstation.info/) or via geth's gas price oracle feature.|
