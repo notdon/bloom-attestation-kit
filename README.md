@@ -11,3 +11,13 @@ A basic installation of the Bloom Attestation Kit is as simple as pulling a copy
 $ git pull git@github.com:hellobloom/attestation-kit.git
 $ cd attestation-kit
 ```
+
+# Environment Variables
+## Configuring the Bloom Attestation Kit
+
+Most of the installation of the Attestation Kit consists of setting environment variables. These variables should be set in the .env file at the top level of the Attestation Kit repository (not to be confused with the file at ```/app/.env.sample```, which you should generally never have to edit).
+
+| Variable      | Role |  Required | Description |
+| ----------- | ----------- | -----------| ----------- |
+| API_KEY_SHA256 | all      | yes         | SHA256 hash of API key required to authenticate requests. When generating a key, make sure to use a long (>20 characters) random string.|
+| NEWRELIC_KEY | all | no | Key used to send events and debugging information to NewRelic.|
