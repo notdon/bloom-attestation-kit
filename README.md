@@ -262,3 +262,37 @@ See our [Signing Logic](https://bloom.co/docs/contracts/signing-logic) page for 
   ]
 }
 ```
+
+# Webhooks
+### How the Attestation Kit communicates with your application
+
+The Attestation Kit has three webhooks for callbacks to your main application - as an attestation requester, a notification that your application should collect signature data from the subject, and as an attester, a prompt to perform the actual responsibilities of an attestation (e.g., manually or automatically verifying the subject's data, such as email, phone number, or other personal information), and then finally, a notification that the attestation has been successfully performed, with the Ethereum transaction ID.
+
+The base URL for each webhook is determined by the ```WEBHOOK_HOST``` environment variable. The resource path for each webhook, below the domain level, is currently hardcoded in the Attestation Kit.
+
+## POST /api/webhooks/prepare_attestation_sig
+Webhook notifying requester that it should collect subject data and submit a request to the [POST /api/requests/send API endpoint](https://bloom.co/docs/attestation-kit/requester)
+
+#### Parameters
+| Name | Type | Description |
+| ----------- | ----------- | -----------|
+| attestation | attestation | An attestation object - see our [Requester documentation](https://bloom.co/docs/attestation-kit/requester) for examples.|
+
+## POST /api/webhooks/perform_attestation
+Webhook notifying attester that it should perform attestation, and when complete, submit the completed attestation to the [POST /api/attestations API endpoint](https://bloom.co/docs/attestation-kit/attester).
+
+#### Parameters
+| Name | Type | Description |
+| ----------- | ----------- | -----------|
+| job_details | job_details | 	A job details - see our [Attester documentation](https://bloom.co/docs/attestation-kit/attester) for examples.|
+
+## POST /api/webhooks/attestation_completed
+Notification that attestation has been completed (triggered by attester).
+
+#### Parameters
+| Name | Type | Description | 
+| ----------- | ----------- | -----------|
+| attestation_id | uuid | 	The ID of the attestation in question. |
+| transaction_hash | txhash | The Ethereum transaction ID of the attestation. |
+| result | string  | 	The result of the attestation. |
+
